@@ -1,3 +1,4 @@
 {
-	"saveLocation": "./data"
+	"saveLocation": "./data",
+	"portNumber": 3000
 }
