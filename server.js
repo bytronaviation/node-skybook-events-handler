@@ -1,5 +1,6 @@
 const fastify = require('fastify')({logger: true});
 const validateData = require('./src/validateData');
+const saveData = require('./src/saveData');
 const config = require('config');
 const portNumber = config.get('portNumber') || 3000;
 
@@ -7,7 +8,11 @@ fastify.get('/', () => 'OK');
 
 fastify.post('/process', async (_request, response) => {
   fastify.log.info(`Skybook event handler: Received request at ${Date.now()}.`);
-  validateData(_request.body);
+  const isValid = validateData(_request.body);
+  if (!isValid) {
+    throw new Error('Data is not in the correct format');
+  }
+  saveData(_request.body);
   fastify.log.info(`Skybook event handler: Completed request at ${Date.now()}.`);
   response.status(200);
 
