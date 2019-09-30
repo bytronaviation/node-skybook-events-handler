@@ -1,10 +1,7 @@
 const fs = require('fs');
-const config = require('config');
-const saveFolder = config.get('saveLocation') || './';
 
-module.exports = function saveData(body) {
+module.exports = function saveData(body, saveFolder) {
   const path = `${saveFolder}/${body.fileData.fileName}`;
-
   if (saveFolder !== './' && !fs.existsSync(saveFolder)) {
     fs.mkdirSync(saveFolder);
   }

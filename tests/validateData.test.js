@@ -6,21 +6,21 @@ const expectedData = {
     'fileName': 'test.json',
     'data': {
       'glossary': {
-        'title': 'example glossary',
-      },
-    },
-  },
+        'title': 'example glossary'
+      }
+    }
+  }
 };
 
 const badData = {
   'url': 'test',
   'fileData': {
     'fileName': 1,
-    'data': 'test',
-  },
+    'data': 'test'
+  }
 };
 
-it('should throw error if data is in incorrect format', function() {
+it('should throw error if data is in incorrect format', function () {
   expect(() => {
     validateData.validateData(badData);
   }).toThrow();

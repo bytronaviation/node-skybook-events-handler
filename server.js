@@ -3,16 +3,16 @@ const validateData = require('./src/validateData');
 const saveData = require('./src/saveData');
 const config = require('config');
 const portNumber = config.get('portNumber') || 3000;
+const saveFolder = config.get('saveLocation') || './';
 
 fastify.get('/', () => 'OK');
 
-fastify.post('/process', async (_request, response) => {
+fastify.post('/process', async (request, response) => {
   fastify.log.info(`Skybook event handler: Received request at ${Date.now()}.`);
-  const isValid = validateData(_request.body);
-  if (!isValid) {
+  if (validateData(request.body)) {
     throw new Error('Data is not in the correct format');
   }
-  saveData(_request.body);
+  saveData(request.body, saveFolder);
   fastify.log.info(`Skybook event handler: Completed request at ${Date.now()}.`);
   response.status(200);
 
