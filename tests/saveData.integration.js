@@ -14,13 +14,16 @@ const expectedData = {
 };
 
 it('should write a file to the filesystem then delete the file', function() {
-  fs.unlinkSync('./data/' + expectedData.fileData.fileName);
   expect(fs.existsSync('./data/' + expectedData.fileData.fileName)).toBe(false);
+
   saveData(expectedData, './data');
+
   expect(fs.existsSync('./data/' + expectedData.fileData.fileName)).toBe(true);
   expect(fs.readFileSync('./data/' + expectedData.fileData.fileName, 'utf-8'))
       .toEqual(JSON.stringify(expectedData.fileData.data, null, 2));
+
   fs.unlinkSync('./data/' + expectedData.fileData.fileName);
+
   expect(fs.existsSync('./data/' + expectedData.fileData.fileName)).toBe(false);
 });
 
