@@ -9,7 +9,7 @@ fastify.get('/', () => 'OK');
 
 fastify.post('/process', async (request, response) => {
   fastify.log.info(`Skybook event handler: Received request at ${Date.now()}.`);
-  if (validateData(request.body)) {
+  if (!validateData(request.body)) {
     throw new Error('Data is not in the correct format');
   }
   saveData(request.body, saveFolder);
