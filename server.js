@@ -5,7 +5,9 @@ const config = require('config');
 const portNumber = config.get('portNumber') || 3000;
 const saveFolder = config.get('saveLocation') || './';
 
-fastify.get('/', () => 'OK');
+fastify.get('/', function(request, response) {
+  response.send('OK');
+});
 
 fastify.post('/process', async (request, response) => {
   fastify.log.info(`Skybook event handler: Received request at ${Date.now()}.`);
@@ -14,9 +16,8 @@ fastify.post('/process', async (request, response) => {
   }
   saveData(request.body, saveFolder);
   fastify.log.info(`Skybook event handler: Completed request at ${Date.now()}.`);
-  response.status(200);
-
-  return 'Success';
+  
+  response.send('Success');
 });
 
 async function start() {
